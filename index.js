@@ -9,8 +9,7 @@ app.post('/lease-request', async (req, res) => {
     const sheetPayload = req.body;
 
     const apiKey = 'ee187c52-f3da-4c62-8d5f-8d01848e22c0';
-
-    const url = 'https://sandbox.api.peacsolutions.com/v1/applications';
+    const url = 'https://api.peacsolutions.com/v1/applications';
 
     const payload = {
       businessName: sheetPayload.businessName,
@@ -18,9 +17,9 @@ app.post('/lease-request', async (req, res) => {
       contactName: sheetPayload.contactName,
       contactEmail: sheetPayload.contactEmail,
       equipmentDescription: sheetPayload.equipmentDescription,
-      monthlyPayment: parseFloat(sheetPayload.monthlyPayment).toFixed(2),
-      equipmentCost: parseFloat(sheetPayload.equipmentCost).toFixed(2),
-      term: String(sheetPayload.term),
+      monthlyPayment: parseFloat(sheetPayload.monthlyPayment || 0).toFixed(2),
+      equipmentCost: parseFloat(sheetPayload.equipmentCost || 0).toFixed(2),
+      term: String(sheetPayload.term || 0),
       purchaseOption: sheetPayload.purchaseOption,
       comments: sheetPayload.comments,
       vendorId: "516279.8023"
