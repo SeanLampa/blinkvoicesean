@@ -9,34 +9,27 @@ app.post('/lease-request', async (req, res) => {
     const sheetPayload = req.body;
 
     const apiKey = 'ee187c52-f3da-4c62-8d5f-8d01848e22c0';
-    const username = 'Blinkvoice';
-    const password = 'PEAC-063025!';
 
-    const basicAuth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
-
-    const url = 'https://testdevportal.marlincapitalsolutions.com:8077/ws/rest/partnerefapi/createPartnerEfApi/';
+    const url = 'https://sandbox.api.peacsolutions.com/v1/applications';
 
     const payload = {
-      PartnerReferenceNumber: "BlinkVoiceAutoDocs-" + Date.now(),
-      VendorNumber: "516279.8023",
-      BusinessName: sheetPayload.businessName,
-      BusinessType: sheetPayload.businessType,
-      ContactName: sheetPayload.contactName,
-      Phone: "555-555-5555",
-      Email: sheetPayload.contactEmail,
-      EquipmentDescription: sheetPayload.equipmentDescription,
-      MonthlyPayment: (sheetPayload.monthlyPayment || 0).toFixed(2),
-      EquipmentCost: (sheetPayload.equipmentCost || 0).toFixed(2),
-      LeaseTerm: sheetPayload.term ? String(sheetPayload.term) : "0",
-      PurchaseOption: sheetPayload.purchaseOption,
-      Notes: sheetPayload.comments
+      businessName: sheetPayload.businessName,
+      businessType: sheetPayload.businessType,
+      contactName: sheetPayload.contactName,
+      contactEmail: sheetPayload.contactEmail,
+      equipmentDescription: sheetPayload.equipmentDescription,
+      monthlyPayment: parseFloat(sheetPayload.monthlyPayment).toFixed(2),
+      equipmentCost: parseFloat(sheetPayload.equipmentCost).toFixed(2),
+      term: String(sheetPayload.term),
+      purchaseOption: sheetPayload.purchaseOption,
+      comments: sheetPayload.comments,
+      vendorId: "516279.8023"
     };
 
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'x-api-key': apiKey,
-        'Authorization': basicAuth,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
