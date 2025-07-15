@@ -6,13 +6,27 @@ app.use(express.json());
 
 app.post('/lease-request', async (req, res) => {
   try {
-    const payload = req.body;
+    const sheetPayload = req.body;
+
     const apiKey = 'ee187c52-f3da-4c62-8d5f-8d01848e22c0';
-    const vendorId = '516279.8023';
+    const url = 'https://testdevportal.marlincapitalsolutions.com:8077/ws/rest/partnerefapi/createPartnerEfApi/';
 
-    payload.vendorId = vendorId;
+    const payload = {
+      PartnerReferenceNumber: "AutoDocs-" + Date.now(),
+      VendorNumber: "516279.8023",
+      BusinessName: sheetPayload.businessName,
+      ContactName: sheetPayload.contactName,
+      Phone: "555-555-5555",  // Replace or pull from Sheet if needed
+      Email: sheetPayload.contactEmail,
+      EquipmentDescription: sheetPayload.equipmentDescription,
+      MonthlyPayment: (sheetPayload.monthlyPayment || 0).toFixed(2),
+      EquipmentCost: (sheetPayload.equipmentCost || 0).toFixed(2),
+      LeaseTerm: sheetPayload.term ? String(sheetPayload.term) : "0",
+      PurchaseOption: sheetPayload.purchaseOption,
+      Notes: sheetPayload.comments
+    };
 
-    const response = await fetch('https://testdevportal.marlincapitalsolutions.com:8077/ws/rest/partnerefapi/createPartnerEfApi/', {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'x-api-key': apiKey,
