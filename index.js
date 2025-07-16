@@ -9,7 +9,7 @@ app.post('/lease-request', async (req, res) => {
     const sheetPayload = req.body;
 
     const apiKey = 'ee187c52-f3da-4c62-8d5f-8d01848e22c0';
-const url = 'https://stagetoolkit.marlincapitalsolutions.com/v1/applications';
+    const url = 'https://stagetoolkit.marlincapitalsolutions.com/v1/applications';
 
     const payload = {
       businessName: sheetPayload.businessName,
